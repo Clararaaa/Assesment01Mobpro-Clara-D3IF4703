@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Yummy Food</string>
+    <string name="format_harga">Rp %2$s</string>
+    <string name="tambah">Add %1$s to cart</string>
+    <string name="gambar_makanan">Image of %1$s</string>
+</resources>

@@ -13,8 +13,12 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -82,13 +86,16 @@ fun ListItem(daftarMakanan: Daftar_Makanan) {
 
         val hargaFormat = NumberFormat.getNumberInstance(Locale("in", "ID")).format(daftarMakanan.harga)
 
+        // Gambar Makanan
         Image(
             painter = image,
-            contentDescription = daftarMakanan.nama_makanan,
+            contentDescription = stringResource(R.string.gambar_makanan, daftarMakanan.nama_makanan),
             modifier = Modifier
                 .size(100.dp)
                 .padding(end = 12.dp)
         )
+
+        // colom text untuk info makanan
         Column(
             modifier = Modifier.weight(1f)
         ) {
@@ -110,6 +117,17 @@ fun ListItem(daftarMakanan: Daftar_Makanan) {
                 style = MaterialTheme.typography.bodyLarge.copy(
                     color = MaterialTheme.colorScheme.error
                 )
+            )
+        }
+
+        // Tombol tambah
+        IconButton(
+            onClick = {}
+        ) {
+            Icon(
+                imageVector = Icons.Default.Add,
+                contentDescription = stringResource(R.string.tambah, daftarMakanan.nama_makanan),
+                tint = MaterialTheme.colorScheme.primary
             )
         }
     }

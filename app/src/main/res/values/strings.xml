@@ -1,4 +1,6 @@
 <resources>
     <string name="app_name">Yummy Food</string>
-    <string name="format_harga" translatable="false">Rp %2$s</string>
+    <string name="format_harga">Rp %2$s</string>
+    <string name="tambah">Tambah Makanan</string>
+    <string name="gambar_makanan">Gambar dari %1$s</string>
 </resources>
