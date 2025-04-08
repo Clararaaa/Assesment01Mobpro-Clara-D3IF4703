@@ -31,6 +31,8 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.clara0007.yummyfood.R
 import com.clara0007.yummyfood.model.Daftar_Makanan
 import com.clara0007.yummyfood.ui.theme.YummyFoodTheme
+import java.text.NumberFormat
+import java.util.Locale
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -78,6 +80,8 @@ fun ListItem(daftarMakanan: Daftar_Makanan) {
     ) {
         val image = painterResource(id = daftarMakanan.image)
 
+        val hargaFormat = NumberFormat.getNumberInstance(Locale("in", "ID")).format(daftarMakanan.harga)
+
         Image(
             painter = image,
             contentDescription = daftarMakanan.nama_makanan,
@@ -101,7 +105,7 @@ fun ListItem(daftarMakanan: Daftar_Makanan) {
             Text(
                 text = stringResource(
                     R.string.format_harga, "",
-                    daftarMakanan.harga.toString()
+                    hargaFormat
                 ),
                 style = MaterialTheme.typography.bodyLarge.copy(
                     color = MaterialTheme.colorScheme.error
