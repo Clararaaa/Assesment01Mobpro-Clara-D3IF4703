@@ -24,7 +24,7 @@ class MainViewDaftarMakanan : ViewModel (){
         ),
         Daftar_Makanan(
             3,
-            R.drawable.Aglio_Oglio,
+            R.drawable.agliooglio,
             "Spaghetti Aglio Oglio",
             "spaghetti dengan bawang putih dan minyak.",
             25000

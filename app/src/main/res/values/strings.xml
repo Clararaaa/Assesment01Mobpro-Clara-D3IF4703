@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Yummy Food</string>
+    <string name="format_harga" translatable="false">Rp %2$s</string>
 </resources>
