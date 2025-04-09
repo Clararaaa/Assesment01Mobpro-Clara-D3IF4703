@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -19,6 +18,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Remove
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -27,11 +27,13 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -72,15 +74,55 @@ fun MainScreen(){
 
 @Composable
 fun ScreenContent(modifier: Modifier = Modifier) {
+    var searchText by remember { mutableStateOf("") }
     val viewModel: MainViewDaftarMakanan = viewModel()
     val data = viewModel.data
 
-    LazyColumn (
-        modifier = modifier.fillMaxSize(),
-    ){
-        items(data){
-            ListItem(daftarMakanan = it)
-            HorizontalDivider()
+    val filteredData = data.filter {
+        it.nama_makanan.contains(searchText, ignoreCase = true)
+    }
+
+    Column(modifier = modifier.padding(16.dp)) {
+        Row(
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            TextField(
+                value = searchText,
+                onValueChange = { searchText = it },
+                placeholder = {
+                    Text(
+                        text = "Cari makanan...",
+                        style = MaterialTheme.typography.bodySmall.copy(
+                            color = Color.White,
+                            fontSize = 15.sp
+                        )
+                    )
+                },
+                modifier = Modifier
+                    .weight(1f)
+                    .height(45.dp),
+                singleLine = true,
+                shape = RoundedCornerShape(5.dp)
+            )
+
+            Spacer(modifier = Modifier.width(8.dp))
+
+            Button(
+                onClick = {},
+                modifier = Modifier.height(45.dp),
+                shape = RoundedCornerShape(5.dp)
+            ) {
+                Icon(Icons.Default.Search, contentDescription = "Cari")
+            }
+        }
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        LazyColumn {
+            items(filteredData) {
+                ListItem(daftarMakanan = it)
+                HorizontalDivider()
+            }
         }
     }
 }
