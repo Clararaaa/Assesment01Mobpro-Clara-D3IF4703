@@ -4,7 +4,8 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import com.clara0007.yummyfood.screen.MainScreen
+import androidx.navigation.compose.rememberNavController
+import com.clara0007.yummyfood.navigation.AppNavHost
 import com.clara0007.yummyfood.ui.theme.YummyFoodTheme
 
 class MainActivity : ComponentActivity() {
@@ -13,7 +14,8 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             YummyFoodTheme {
-                    MainScreen()
+                val navController = rememberNavController()
+                AppNavHost(navController = navController)
                 }
             }
         }

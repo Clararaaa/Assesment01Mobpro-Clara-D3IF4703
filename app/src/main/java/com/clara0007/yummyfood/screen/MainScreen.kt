@@ -72,8 +72,8 @@ fun MainScreen(){
         },
         bottomBar = {
             ChechOutBar(
-                totalHarga = 23000,
-                item = 1,
+                totalHarga = 0,
+                item = 0,
                 onCheckoutClick = {}
             )
         }
