@@ -78,11 +78,16 @@ fun ScreenContent(modifier: Modifier = Modifier) {
     val viewModel: MainViewDaftarMakanan = viewModel()
     val data = viewModel.data
 
-    val filteredData = data.filter {
-        it.nama_makanan.contains(searchText, ignoreCase = true)
+    val filteredData = remember(searchText, data) {
+        if (searchText.isBlank()) {
+            data
+        } else {
+            data.sortedByDescending { item ->
+                item.nama_makanan.contains(searchText, ignoreCase = true)
+            }
+        }
     }
-
-    Column(modifier = modifier.padding(16.dp)) {
+    Column(modifier = modifier.padding(12.dp)) {
         Row(
             verticalAlignment = Alignment.CenterVertically
         ) {
@@ -93,11 +98,14 @@ fun ScreenContent(modifier: Modifier = Modifier) {
                     Text(
                         text = "Cari makanan...",
                         style = MaterialTheme.typography.bodySmall.copy(
-                            color = Color.White,
-                            fontSize = 15.sp
+                            color = Color.White
                         )
                     )
                 },
+                textStyle = MaterialTheme.typography.bodySmall.copy(
+                    fontSize = 12.sp,
+                    color = Color.White
+                ),
                 modifier = Modifier
                     .weight(1f)
                     .height(45.dp),
