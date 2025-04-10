@@ -64,6 +64,9 @@ import java.util.Locale
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MainScreen(){
+    var totalItem by remember { mutableIntStateOf(0) }
+    var totalHarga by remember { mutableIntStateOf(0) }
+
     Scaffold (
         topBar = {
             TopAppBar(
@@ -82,19 +85,33 @@ fun MainScreen(){
             )
         },
         bottomBar = {
-            ChechOutBar(
-                totalHarga = 0,
-                item = 0,
+            CheckOutBar(
+                totalHarga = totalHarga,
+                item = totalItem,
                 onCheckoutClick = {}
             )
         }
     ){ innerPadding ->
-        ScreenContent(Modifier.padding(innerPadding))
+        ScreenContent(
+            modifier = Modifier.padding(innerPadding),
+            onItemAdd = { harga ->
+                totalItem++
+                totalHarga += harga
+            },
+            onItemRemoved = { harga ->
+                if (totalItem > 0) totalItem--
+                if (totalHarga >= harga) totalHarga -= harga
+            }
+        )
     }
 }
 
 @Composable
-fun ScreenContent(modifier: Modifier = Modifier) {
+fun ScreenContent(
+    modifier: Modifier = Modifier,
+    onItemAdd: (Int) -> Unit,
+    onItemRemoved: (Int) -> Unit
+    ) {
     var searchText by remember { mutableStateOf("") }
     val viewModel: MainViewDaftarMakanan = viewModel()
     val data = viewModel.data
@@ -149,7 +166,10 @@ fun ScreenContent(modifier: Modifier = Modifier) {
 
         LazyColumn {
             items(filteredData) {
-                ListItem(daftarMakanan = it)
+                ListItem(daftarMakanan = it,
+                    onItemAdd = onItemAdd,
+                    onItemRemoved = onItemRemoved
+                    )
                 HorizontalDivider()
             }
         }
@@ -157,7 +177,11 @@ fun ScreenContent(modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun ListItem(daftarMakanan: Daftar_Makanan) {
+fun ListItem(
+    daftarMakanan: Daftar_Makanan,
+    onItemAdd: (Int) -> Unit,
+    onItemRemoved: (Int) -> Unit
+) {
     var quantity by remember { mutableIntStateOf(0) }
     Row(
         modifier = Modifier
@@ -211,8 +235,16 @@ fun ListItem(daftarMakanan: Daftar_Makanan) {
 
             QuantitySelector(
                 quantity = quantity,
-                onIncrement = { quantity++ },
-                onDecrement = { if (quantity > 0) quantity-- }
+                onIncrement = {
+                    quantity++
+                    onItemAdd(daftarMakanan.harga)
+                },
+                onDecrement = {
+                    if (quantity > 0) {
+                        quantity--
+                        onItemRemoved(daftarMakanan.harga)
+                    }
+                }
             )
         }
     }
@@ -272,7 +304,7 @@ fun QuantitySelector(
 }
 
 @Composable
-fun ChechOutBar(
+fun CheckOutBar(
     totalHarga: Int,
     item: Int,
     onCheckoutClick: () -> Unit
