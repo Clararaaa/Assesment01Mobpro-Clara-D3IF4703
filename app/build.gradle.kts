@@ -10,7 +10,7 @@ android {
 
     defaultConfig {
         applicationId = "com.clara0007.yummyfood"
-        minSdk = 23
+        minSdk = 26
         targetSdk = 35
         versionCode = 1
         versionName = "1.0"
