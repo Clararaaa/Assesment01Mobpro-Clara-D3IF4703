@@ -1,6 +1,7 @@
 package com.clara0007.yummyfood.screen
 
 import android.content.res.Configuration
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -41,6 +42,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -266,6 +268,8 @@ fun ChechOutBar(
     item: Int,
     onCheckoutClick: () -> Unit
 ) {
+    val context = LocalContext.current
+
     Surface(
         tonalElevation = 4.dp,
         shadowElevation = 8.dp,
@@ -281,7 +285,7 @@ fun ChechOutBar(
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Icon(
                     imageVector = Icons.Default.ShoppingCart,
-                    contentDescription = "Keranjang",
+                    contentDescription = stringResource(R.string.keranjang),
                     tint = MaterialTheme.colorScheme.primary
                 )
                 if (item > 0) {
@@ -301,7 +305,17 @@ fun ChechOutBar(
                 )
             }
             Button(
-                onClick = onCheckoutClick,
+                onClick = {
+                    if (item == 0) {
+                        Toast.makeText(
+                            context,
+                            "Keranjang anda masih kosong, silahkan pilih item!",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    } else {
+                        onCheckoutClick()
+                    }
+                },
                 colors = ButtonDefaults.buttonColors(
                     containerColor = MaterialTheme.colorScheme.primary
                 ),

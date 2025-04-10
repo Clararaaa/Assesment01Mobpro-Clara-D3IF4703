@@ -4,4 +4,6 @@
     <string name="tambah">Tambah Makanan</string>
     <string name="gambar_makanan">Gambar dari %1$s</string>
     <string name="kurang">Kurangi Makanan</string>
+    <string name="keranjang">Keranjang Makanan</string>
+    <string name="bagikan">Bagikan Menu</string>
 </resources>
