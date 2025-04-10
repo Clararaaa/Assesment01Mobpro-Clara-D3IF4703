@@ -113,6 +113,7 @@ fun ScreenContent(
     onItemRemoved: (Int) -> Unit
     ) {
     var searchText by remember { mutableStateOf("") }
+    var showEmptyMessage by remember { mutableStateOf(false) }
     val viewModel: MainViewDaftarMakanan = viewModel()
     val data = viewModel.data
 
@@ -156,12 +157,23 @@ fun ScreenContent(
             Spacer(modifier = Modifier.width(8.dp))
 
             Button(
-                onClick = {},
+                onClick = {
+                    showEmptyMessage = filteredData.isEmpty()
+                },
                 modifier = Modifier.height(45.dp),
                 shape = RoundedCornerShape(5.dp)
             ) {
                 Icon(Icons.Default.Search, contentDescription = "Cari")
             }
+        }
+
+        if (filteredData.isEmpty()) {
+            Text(
+                text = stringResource(R.string.tidak_tersedia),
+                style = MaterialTheme.typography.headlineMedium.copy(),
+                textAlign = TextAlign.Center,
+                modifier = Modifier.fillMaxWidth().padding(top = 50.dp)
+            )
         }
 
         Spacer(modifier = Modifier.height(16.dp))

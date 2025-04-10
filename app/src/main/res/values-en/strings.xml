@@ -11,6 +11,7 @@
     <string name="cari">Search food...</string>
     <string name="pesan_makanan">Order Now</string>
     <string name="share">Check out delicious food on YummyFood!\n\nCheck out the app here:</string>
+    <string name="tidak_tersedia">Item not found</string>
 
     <string name="carbonara">Spaghetti Carbonara</string>
     <string name="bolognese">Spaghetti Bolognese</string>

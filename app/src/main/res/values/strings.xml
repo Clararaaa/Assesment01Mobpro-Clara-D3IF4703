@@ -9,6 +9,7 @@
     <string name="cari">Cari makanan...</string>
     <string name="pesan_makanan">Pesan Sekarang</string>
     <string name="share">Lihat menu makanan enak di YummyFood yuk!\n\nCek aplikasinya di sini:</string>
+    <string name="tidak_tersedia">Item tidak tersedia</string>
 
     // Judul Makanan
     <string name="carbonara">Spaghetti Carbonara</string>
