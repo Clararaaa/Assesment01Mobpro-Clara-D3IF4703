@@ -10,6 +10,7 @@
     <string name="sanity_check">Your cart is still empty, please select an item!</string>
     <string name="cari">Search food...</string>
     <string name="pesan_makanan">Order Now</string>
+    <string name="share">Check out delicious food on YummyFood!\n\nCheck out the app here:</string>
 
     <string name="carbonara">Spaghetti Carbonara</string>
     <string name="bolognese">Spaghetti Bolognese</string>

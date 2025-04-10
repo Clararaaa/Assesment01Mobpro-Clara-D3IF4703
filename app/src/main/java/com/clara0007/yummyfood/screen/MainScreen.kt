@@ -75,7 +75,7 @@ fun MainScreen(){
                 },
                 actions = {
                     ShareButton(
-                        message = "Lihat menu makanan enak di YummyFood yuk!"
+                        message = stringResource(R.string.share)
                     )
                 },
                 colors = TopAppBarDefaults.mediumTopAppBarColors(
@@ -372,7 +372,7 @@ fun CheckOutBar(
 private fun shareMenu(context: Context, message: String) {
     val intent = Intent(Intent.ACTION_SEND).apply {
         type = "text/plain"
-        putExtra(Intent.EXTRA_TEXT, "$message\n\nCek aplikasinya di sini:\nhttps://play.google.com/store/apps/details?id=com.clara0007.yummyfood\n")
+        putExtra(Intent.EXTRA_TEXT, "$message\nhttps://play.google.com/store/apps/details?id=com.clara0007.yummyfood\n")
     }
     context.startActivity(Intent.createChooser(intent, "Bagikan dengan"))
 }
