@@ -1,5 +1,7 @@
 package com.clara0007.yummyfood.screen
 
+import android.content.Context
+import android.content.Intent
 import android.content.res.Configuration
 import android.widget.Toast
 import androidx.compose.foundation.Image
@@ -20,12 +22,14 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Remove
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.filled.Share
 import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
@@ -65,6 +69,11 @@ fun MainScreen(){
             TopAppBar(
                 title = {
                     Text( text = stringResource(id = R.string.app_name))
+                },
+                actions = {
+                    ShareButton(
+                        message = "Lihat menu makanan enak di YummyFood yuk!"
+                    )
                 },
                 colors = TopAppBarDefaults.mediumTopAppBarColors(
                     containerColor = MaterialTheme.colorScheme.primaryContainer,
@@ -324,6 +333,28 @@ fun ChechOutBar(
                 Text(text = "Checkout", color = Color.White)
             }
         }
+    }
+}
+
+private fun shareMenu(context: Context, message: String) {
+    val intent = Intent(Intent.ACTION_SEND).apply {
+        type = "text/plain"
+        putExtra(Intent.EXTRA_TEXT, "$message\n\nCek aplikasinya di sini:\nhttps://play.google.com/store/apps/details?id=com.clara0007.yummyfood\n")
+    }
+    context.startActivity(Intent.createChooser(intent, "Bagikan dengan"))
+}
+
+@Composable
+fun ShareButton(message: String) {
+    val context = LocalContext.current
+
+    IconButton(onClick = {
+        shareMenu(context,message)
+    }) {
+        Icon(
+            imageVector = Icons.Default.Share,
+            contentDescription = "Bagikan"
+        )
     }
 }
 
