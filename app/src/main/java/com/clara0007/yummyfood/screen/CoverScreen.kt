@@ -65,7 +65,7 @@ fun CoverScreen(onStartClick: () -> Unit) {
                 colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary),
                 shape = MaterialTheme.shapes.medium
             ) {
-                Text("Pesan Sekarang", color = Color.White)
+                Text(stringResource(R.string.pesan_makanan), color = Color.White)
             }
         }
     }

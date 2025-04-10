@@ -2,6 +2,28 @@
 <resources>
     <string name="app_name">Yummy Food</string>
     <string name="format_harga">Rp %2$s</string>
-    <string name="tambah">Add %1$s to cart</string>
+    <string name="tambah">Add Item</string>
     <string name="gambar_makanan">Image of %1$s</string>
+    <string name="kurang">Remove Item</string>
+    <string name="keranjang">Food Cart</string>
+    <string name="bagikan">Share Menu</string>
+    <string name="sanity_check">Your cart is still empty, please select an item!</string>
+    <string name="cari">Search food...</string>
+    <string name="pesan_makanan">Order Now</string>
+
+    <string name="carbonara">Spaghetti Carbonara</string>
+    <string name="bolognese">Spaghetti Bolognese</string>
+    <string name="aglio">Spaghetti Aglio e Olio</string>
+    <string name="alfredo">Spaghetti Alfredo</string>
+    <string name="cappucino">Cappuccino</string>
+    <string name="blackcurrent">Blackcurrant Squash</string>
+    <string name="strawberry">Strawberry Juice</string>
+
+    <string name="desc_carbonara">Spaghetti cooked with egg sauce, cheese, and meat.</string>
+    <string name="desc_bolognese">Spaghetti cooked in minced beef sauce with small carrot slices and sausage.</string>
+    <string name="desc_aglio">Spaghetti with garlic and oil.</string>
+    <string name="desc_alfredo">Spaghetti mixed with butter and Parmesan cheese.</string>
+    <string name="desc_cappucino">Warm cappuccino</string>
+    <string name="desc_blackcurrent">Refreshing blackcurrant soda drink</string>
+    <string name="desc_strawberry">Strawberry juice with milk</string>
 </resources>

@@ -10,51 +10,50 @@ class MainViewDaftarMakanan : ViewModel (){
         Daftar_Makanan(
             1,
             R.drawable.carbonara,
-            "Spaghetti Carbonara",
-            "Spaghetti yang dimasak dengan saus telur, keju dan daging.",
+            R.string.carbonara,
+            R.string.desc_carbonara,
             30000
         ),
         Daftar_Makanan(
             2,
             R.drawable.bolognese,
-            "Spaghetti Bolognese",
-            "Spaghetti yang di masak dengan pasta daging sapi yang di giling dengan" +
-                    "potongan wortel kecil dan sosis.",
+            R.string.bolognese,
+            R.string.desc_bolognese,
             28000
         ),
         Daftar_Makanan(
             3,
             R.drawable.agliooglio,
-            "Spaghetti Aglio Oglio",
-            "spaghetti dengan bawang putih dan minyak.",
+            R.string.aglio,
+            R.string.desc_aglio,
             25000
         ),
         Daftar_Makanan(
             4,
             R.drawable.alfredo,
-            "Spaghetti Alfredo",
-            "Spaghetti yang dicampur dengan mentega dan keju Parmesan.",
+            R.string.alfredo,
+            R.string.desc_alfredo,
             28000
         ),
         Daftar_Makanan(
             5,
             R.drawable.cappucino,
-            "Cappucino",
-            "Cappucino hangat",
+            R.string.cappucino,
+            R.string.desc_cappucino,
             15000
         ),
         Daftar_Makanan(
             6,
             R.drawable.blackcurrent,
-            "Blackcurrent Squash",
-            "Minuman segar blackcurrent dengan soda",
+            R.string.blackcurrent,
+            R.string.desc_blackcurrent,
             17000
         ),
         Daftar_Makanan(
             7,
             R.drawable.jus_strawberry,
-            "Jus Strawberry",
-            "Jus Strawberry dengan susu",
+            R.string.strawberry,
+            R.string.desc_strawberry,
             17000
         )
     )

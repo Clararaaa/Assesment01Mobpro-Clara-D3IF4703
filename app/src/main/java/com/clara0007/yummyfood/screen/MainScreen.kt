@@ -116,12 +116,14 @@ fun ScreenContent(
     val viewModel: MainViewDaftarMakanan = viewModel()
     val data = viewModel.data
 
+    val context = LocalContext.current
     val filteredData = remember(searchText, data) {
         if (searchText.isBlank()) {
             data
         } else {
-            data.sortedByDescending { item ->
-                item.nama_makanan.contains(searchText, ignoreCase = true)
+            data.filter { item ->
+                context.getString(item.nama_makanan)
+                .contains(searchText, ignoreCase = true)
             }
         }
     }
@@ -134,7 +136,7 @@ fun ScreenContent(
                 onValueChange = { searchText = it },
                 placeholder = {
                     Text(
-                        text = "Cari makanan...",
+                        text = stringResource(R.string.cari),
                         style = MaterialTheme.typography.bodySmall.copy(
                             color = Color.White
                         )
@@ -212,11 +214,11 @@ fun ListItem(
             modifier = Modifier.weight(1f)
         ) {
             Text(
-                text = daftarMakanan.nama_makanan,
+                text = stringResource(daftarMakanan.nama_makanan),
                 style = MaterialTheme.typography.titleLarge
             )
             Text(
-                text = daftarMakanan.deskripsi_makanan,
+                text = stringResource(daftarMakanan.deskripsi_makanan),
                 style = MaterialTheme.typography.bodyMedium
             )
 
@@ -243,8 +245,7 @@ fun ListItem(
                     if (quantity > 0) {
                         quantity--
                         onItemRemoved(daftarMakanan.harga)
-                    }
-                }
+                    } }
             )
         }
     }
@@ -350,7 +351,7 @@ fun CheckOutBar(
                     if (item == 0) {
                         Toast.makeText(
                             context,
-                            "Keranjang anda masih kosong, silahkan pilih item!",
+                            R.string.sanity_check,
                             Toast.LENGTH_SHORT
                         ).show()
                     } else {
