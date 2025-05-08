@@ -38,6 +38,7 @@ import androidx.compose.material3.TextField
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
@@ -56,16 +57,21 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.clara0007.yummyfood.R
+import com.clara0007.yummyfood.database.entity.ItemKeranjang
 import com.clara0007.yummyfood.model.Daftar_Makanan
 import com.clara0007.yummyfood.ui.theme.YummyFoodTheme
+import com.clara0007.yummyfood.viewmodel.ViewDaftarMakanan
 import java.text.NumberFormat
 import java.util.Locale
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MainScreen(){
-    var totalItem by remember { mutableIntStateOf(0) }
-    var totalHarga by remember { mutableIntStateOf(0) }
+fun MainScreen(
+    viewModel: ViewDaftarMakanan,
+    onKeranjangClick: () -> Unit
+){
+    val totalItem by viewModel.totalItem.collectAsState()
+    val totalHarga by viewModel.totalHarga.collectAsState()
 
     Scaffold (
         topBar = {
@@ -74,6 +80,12 @@ fun MainScreen(){
                     Text( text = stringResource(id = R.string.app_name))
                 },
                 actions = {
+                    IconButton(onClick = onKeranjangClick) {
+                        Icon(
+                            imageVector = Icons.Default.ShoppingCart,
+                            contentDescription = stringResource(R.string.keranjang)
+                        )
+                    }
                     ShareButton(
                         message = stringResource(R.string.share)
                     )
@@ -94,14 +106,8 @@ fun MainScreen(){
     ){ innerPadding ->
         ScreenContent(
             modifier = Modifier.padding(innerPadding),
-            onItemAdd = { harga ->
-                totalItem++
-                totalHarga += harga
-            },
-            onItemRemoved = { harga ->
-                if (totalItem > 0) totalItem--
-                if (totalHarga >= harga) totalHarga -= harga
-            }
+            onItemAdd = { harga -> viewModel.tambahItem(harga) },
+            onItemRemoved = { harga -> viewModel.kurangiItem(harga) }
         )
     }
 }
@@ -111,10 +117,10 @@ fun ScreenContent(
     modifier: Modifier = Modifier,
     onItemAdd: (Int) -> Unit,
     onItemRemoved: (Int) -> Unit
-    ) {
+) {
     var searchText by remember { mutableStateOf("") }
     var showEmptyMessage by remember { mutableStateOf(false) }
-    val viewModel: MainViewDaftarMakanan = viewModel()
+    val viewModel: ViewDaftarMakanan = viewModel()
     val data = viewModel.data
 
     val context = LocalContext.current
@@ -124,7 +130,7 @@ fun ScreenContent(
         } else {
             data.filter { item ->
                 context.getString(item.nama_makanan)
-                .contains(searchText, ignoreCase = true)
+                    .contains(searchText, ignoreCase = true)
             }
         }
     }
@@ -182,8 +188,9 @@ fun ScreenContent(
             items(filteredData) {
                 ListItem(daftarMakanan = it,
                     onItemAdd = onItemAdd,
-                    onItemRemoved = onItemRemoved
-                    )
+                    onItemRemoved = onItemRemoved,
+                    viewModel = viewModel
+                )
                 HorizontalDivider()
             }
         }
@@ -194,7 +201,8 @@ fun ScreenContent(
 fun ListItem(
     daftarMakanan: Daftar_Makanan,
     onItemAdd: (Int) -> Unit,
-    onItemRemoved: (Int) -> Unit
+    onItemRemoved: (Int) -> Unit,
+    viewModel: ViewDaftarMakanan
 ) {
     var quantity by remember { mutableIntStateOf(0) }
     Row(
@@ -252,6 +260,7 @@ fun ListItem(
                 onIncrement = {
                     quantity++
                     onItemAdd(daftarMakanan.harga)
+                    viewModel.addToCart(daftarMakanan)
                 },
                 onDecrement = {
                     if (quantity > 0) {
@@ -398,8 +407,30 @@ fun ShareButton(message: String) {
     }) {
         Icon(
             imageVector = Icons.Default.Share,
-            contentDescription = "Bagikan"
+            contentDescription = stringResource(R.string.share)
         )
+    }
+}
+
+@Composable
+fun ItemKeranjangColom(item: ItemKeranjang) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(8.dp)
+    ) {
+        Image(
+            painter = painterResource(id = item.image),
+            contentDescription = item.nama,
+            modifier = Modifier
+                .size(64.dp)
+                .padding(end = 8.dp)
+        )
+        Column {
+            Text(text = item.nama)
+            Text(text = "Rp${item.harga}")
+            Text(text = "Jumlah: ${item.jumlah}")
+        }
     }
 }
 
@@ -408,6 +439,9 @@ fun ShareButton(message: String) {
 @Composable
 fun MainScreenPreview(){
     YummyFoodTheme {
-        MainScreen()
+        MainScreen(
+            viewModel = viewModel(),
+            onKeranjangClick = {}
+        )
     }
 }
