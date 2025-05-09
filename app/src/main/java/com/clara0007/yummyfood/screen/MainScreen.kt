@@ -1,5 +1,6 @@
 package com.clara0007.yummyfood.screen
 
+import androidx.activity.compose.BackHandler
 import android.content.Context
 import android.content.Intent
 import android.content.res.Configuration
@@ -24,6 +25,7 @@ import androidx.compose.material.icons.filled.Remove
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Share
 import androidx.compose.material.icons.filled.ShoppingCart
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -68,10 +70,17 @@ import java.util.Locale
 @Composable
 fun MainScreen(
     viewModel: ViewDaftarMakanan,
-    onKeranjangClick: () -> Unit
+    onKeranjangClick: () -> Unit,
+    onNavigateBack: () -> Unit
 ){
     val totalItem by viewModel.totalItem.collectAsState()
     val totalHarga by viewModel.totalHarga.collectAsState()
+
+    var showDialog by remember { mutableStateOf(false) }
+
+    BackHandler {
+        showDialog = true
+    }
 
     Scaffold (
         topBar = {
@@ -108,6 +117,26 @@ fun MainScreen(
             modifier = Modifier.padding(innerPadding),
             onItemAdd = { harga -> viewModel.tambahItem(harga) },
             onItemRemoved = { harga -> viewModel.kurangiItem(harga) }
+        )
+    }
+    if (showDialog) {
+        AlertDialog(
+            onDismissRequest = { showDialog = false },
+            confirmButton = {
+                Button(onClick = {
+                    showDialog = false
+                    onNavigateBack()
+                }) {
+                    stringResource(R.string.tombol_iya)
+                }
+            },
+            dismissButton = {
+                Button(onClick = { showDialog = false }) {
+                    stringResource(R.string.tombol_batal)
+                }
+            },
+            title = { stringResource(R.string.konfirmasi) },
+            text = { stringResource(R.string.pesan_exit) }
         )
     }
 }
@@ -189,7 +218,7 @@ fun ScreenContent(
                 ListItem(daftarMakanan = it,
                     onItemAdd = onItemAdd,
                     onItemRemoved = onItemRemoved,
-                    viewModel = viewModel
+                    viewModel = viewModel,
                 )
                 HorizontalDivider()
             }
@@ -202,7 +231,7 @@ fun ListItem(
     daftarMakanan: Daftar_Makanan,
     onItemAdd: (Int) -> Unit,
     onItemRemoved: (Int) -> Unit,
-    viewModel: ViewDaftarMakanan
+    viewModel: ViewDaftarMakanan,
 ) {
     var quantity by remember { mutableIntStateOf(0) }
     Row(
@@ -265,8 +294,9 @@ fun ListItem(
                 onDecrement = {
                     if (quantity > 0) {
                         quantity--
-                        onItemRemoved(daftarMakanan.harga)
-                    } }
+                        onItemRemoved
+                    }
+                }
             )
         }
     }
@@ -441,7 +471,8 @@ fun MainScreenPreview(){
     YummyFoodTheme {
         MainScreen(
             viewModel = viewModel(),
-            onKeranjangClick = {}
+            onKeranjangClick = {},
+            onNavigateBack = {}
         )
     }
 }
