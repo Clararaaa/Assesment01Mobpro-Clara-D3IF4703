@@ -31,7 +31,8 @@ fun AppNavHost(navController: NavHostController) {
                 viewModel = viewModel,
                 onKeranjangClick = {
                     navController.navigate(Screen.Keranjang.route)
-                }
+                },
+                onNavigateBack = { navController.popBackStack() }
             )
         }
         composable(Screen.Keranjang.route) {
