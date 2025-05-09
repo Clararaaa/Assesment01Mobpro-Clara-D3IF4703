@@ -12,6 +12,12 @@
     <string name="pesan_makanan">Order Now</string>
     <string name="share">Check out delicious food on YummyFood!\n\nCheck out the app here:</string>
     <string name="tidak_tersedia">Item not found</string>
+    <string name="pesan_exit">Are you sure you want to exit?</string>
+    <string name="tombol_iya">Yes</string>
+    <string name="tombol_batal">Cancel</string>
+    <string name="konfirmasi">Confirmation</string>
+    <string name="grid">Grid</string>
+    <string name="list">List</string>
 
     <string name="carbonara">Spaghetti Carbonara</string>
     <string name="bolognese">Spaghetti Bolognese</string>

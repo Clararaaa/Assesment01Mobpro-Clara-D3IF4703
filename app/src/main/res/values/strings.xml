@@ -10,6 +10,12 @@
     <string name="pesan_makanan">Pesan Sekarang</string>
     <string name="share">Lihat menu makanan enak di YummyFood yuk!\n\nCek aplikasinya di sini:</string>
     <string name="tidak_tersedia">Item tidak tersedia</string>
+    <string name="pesan_exit">Apakah anda yakin ingin keluar?</string>
+    <string name="tombol_iya">Iya</string>
+    <string name="tombol_batal">Batal</string>
+    <string name="konfirmasi">Konfirmasi</string>
+    <string name="grid">Grid</string>
+    <string name="list">List</string>
 
     // Judul Makanan
     <string name="carbonara">Spaghetti Carbonara</string>
